@@ -216,11 +216,11 @@ Put Bucket 接口请求可以在指定账号下创建一个 Bucket。该 API 接
 ```js
 
 var params = {
-  Bucket : 'STRING_VALUE',    /* 必须 */
-  Region : 'STRING_VALUE',    /* 必须 */
-  ACL : 'STRING_VALUE',   /* 非必须 */
-  GrantRead : 'STRING_VALUE', /* 非必须 */
-  GrantWrite : 'STRING_VALUE',    /* 非必须 */
+  Bucket : 'STRING_VALUE',            /* 必须 */
+  Region : 'STRING_VALUE',            /* 必须 */
+  ACL : 'STRING_VALUE',               /* 非必须 */
+  GrantRead : 'STRING_VALUE',         /* 非必须 */
+  GrantWrite : 'STRING_VALUE',        /* 非必须 */
   GrantFullControl : 'STRING_VALUE'   /* 非必须 */
 };
 
@@ -481,28 +481,28 @@ Put Bucket CORS 接口用来请求设置 Bucket 的跨域资源共享权限，�
 ```js
 
 var params = {
-  Bucket : 'STRING_VALUE',        /* 必须 */
-  Region : 'STRING_VALUE',        /* 必须 */
+  Bucket : 'STRING_VALUE',              /* 必须 */
+  Region : 'STRING_VALUE',              /* 必须 */
   CORSRules : [
     {
-      ID : 'STRING_VALUE',    /* 非必须 */
-      AllowedMethods: [       /* 必须 */
+      ID : 'STRING_VALUE',              /* 非必须 */
+      AllowedMethods: [                 /* 必须 */
         'STRING_VALUE',
         ...
       ],
-      AllowedOrigins: [        /* 必须 */
+      AllowedOrigins: [                 /* 必须 */
         'STRING_VALUE',
         ...
       ],
-      AllowedHeaders: [       /* 非必须 */
+      AllowedHeaders: [                 /* 非必须 */
         'STRING_VALUE',
         ...
       ],
-      ExposeHeaders: [        /* 非必须 */
+      ExposeHeaders: [                  /* 非必须 */
         'STRING_VALUE',
         ...
       ],
-      MaxAgeSeconds: 'STRING_VALUE'   /* 非必须 */
+      MaxAgeSeconds: 'STRING_VALUE'     /* 非必须 */
     },
     ....
   ]
@@ -653,9 +653,9 @@ Head Object 接口请求可以获取对应 Object 的 meta 信息数据，Head �
 ```js
 
 var params = {
-  Bucket : 'STRING_VALUE',        /* 必须 */
-  Region : 'STRING_VALUE',        /* 必须 */
-  Key : 'STRING_VALUE',           /* 必须 */
+  Bucket : 'STRING_VALUE',            /* 必须 */
+  Region : 'STRING_VALUE',            /* 必须 */
+  Key : 'STRING_VALUE',               /* 必须 */
   IfModifiedSince : 'STRING_VALUE'    /* 非必须 */
 };
 
@@ -1411,8 +1411,8 @@ var params = {
   UploadId : 'STRING_VALUE',                      /* 必须 */
   Parts : [
     {
-      PartNumber : 'STRING_VALUE',            /* 必须 */
-      ETag : 'STRING_VALUE'                   /* 必须 */
+      PartNumber : 'STRING_VALUE',                /* 必须 */
+      ETag : 'STRING_VALUE'                       /* 必须 */
     },
     ...
   ]
@@ -1686,14 +1686,14 @@ Slice Upload File 可用于实现文件的分块上传。
 
 ```js
 var params = {
-  Bucket: 'STRING_VALUE', /* 必须 */
-  Region: 'STRING_VALUE', /* 必须 */
-  Key: 'STRING_VALUE',    /* 必须 */
-  FilePath: 'STRING_VALUE',   /* 必须 */
-  SliceSize: 'STRING_VALUE',  /* 非必须 */
-  StorageClass: 'STRING_VALUE',   /* 非必须 */
-  AsyncLimit: 'NUMBER_VALUE', /* 非必须 */
-  TaskReady: function(TaskId) {       /* 非必须 */
+  Bucket: 'STRING_VALUE',                         /* 必须 */
+  Region: 'STRING_VALUE',                         /* 必须 */
+  Key: 'STRING_VALUE',                            /* 必须 */
+  FilePath: 'STRING_VALUE',                       /* 必须 */
+  SliceSize: 'STRING_VALUE',                      /* 非必须 */
+  StorageClass: 'STRING_VALUE',                   /* 非必须 */
+  AsyncLimit: 'NUMBER_VALUE',                     /* 非必须 */
+  TaskReady: function(TaskId) {                   /* 非必须 */
     console.log(TaskId);
   },
   onHashProgress: function (progressData) {       /* 非必须 */
