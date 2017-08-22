@@ -71,9 +71,9 @@ function(err, data) { ... }
 * **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。 
 * **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
   * Buckets —— (Array) ：说明本次返回的Bucket列表的所有信息
-  * Name —— (String) ：Bucket 的名称
-  * CreateDate —— (String) ：Bucket 创建时间。ISO8601 格式，例如 2016-11-09T08:46:32.000Z
-  * Location —— (String) ： Bucket 所在区域。枚举值：cn-east，cn-south，cn-north，cn-southwest，sg
+    * Name —— (String) ：Bucket 的名称
+    * CreateDate —— (String) ：Bucket 创建时间。ISO8601 格式，例如 2016-11-09T08:46:32.000Z
+    * Location —— (String) ： Bucket 所在区域。枚举值：cn-east，cn-south，cn-north，cn-southwest，sg
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
@@ -1114,10 +1114,10 @@ var params = {
   Region : 'STRING_VALUE',                        /* 必须 */
   Quiet : 'BOOLEAN_VALUE',                        /* 非必须 */
   Objects :  [                                    /* 必须 */
-  {
-    Key : 'STRING_VALUE'                    /* 必须 */
-  },
-  ...
+    {
+      Key : 'STRING_VALUE'                        /* 必须 */
+    },
+    ...
   ]
 };
 
