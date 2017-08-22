@@ -742,7 +742,7 @@ var params = {
   IfUnmodifiedSince : 'STRING_VALUE',             /* 非必须 */
   IfMatch : 'STRING_VALUE',                       /* 非必须 */
   IfNoneMatch : 'STRING_VALUE',                   /* 非必须 */
-  Output : 'WRITE_STREAM'                         /* 必须 */
+  Output : 'WRITE_STREAM',                        /* 必须 */
   onProgress : function(progressData) {           /* 非必须 */
     console.log(JSON.stringify(progressData));
   }                        
