@@ -142,12 +142,12 @@ Get Bucket 请求等同于 List Object 请求，可以列出该 Bucket 下的部
 ```js
 
 var params = {
-  Bucket : 'STRING_VALUE',    /* 必须 */
-  Region : 'STRING_VALUE',    /* 必须 */
-  Prefix : 'STRING_VALUE',    /* 非必须 */
-  Delimiter : 'STRING_VALUE', /* 非必须 */
-  Marker : 'STRING_VALUE',    /* 非必须 */
-  MaxKeys : 'STRING_VALUE',   /* 非必须 */
+  Bucket : 'STRING_VALUE',        /* 必须 */
+  Region : 'STRING_VALUE',        /* 必须 */
+  Prefix : 'STRING_VALUE',        /* 非必须 */
+  Delimiter : 'STRING_VALUE',     /* 非必须 */
+  Marker : 'STRING_VALUE',        /* 非必须 */
+  MaxKeys : 'STRING_VALUE',       /* 非必须 */
   EncodingType : 'STRING_VALUE',  /* 非必须 */
 };
 
