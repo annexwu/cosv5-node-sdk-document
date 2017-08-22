@@ -743,7 +743,9 @@ var params = {
   IfMatch : 'STRING_VALUE',                       /* 非必须 */
   IfNoneMatch : 'STRING_VALUE',                   /* 非必须 */
   Output : 'WRITE_STREAM'                         /* 必须 */
-  onProgress : 'FUNCTION'                         /* 非必须 */
+  onProgress : function(progressData) {           /* 非必须 */
+    console.log(JSON.stringify(progressData));
+  }                        
 };
 
 cos.getObject(params, function(err, data) {
@@ -830,7 +832,9 @@ var params = {
   StorageClass : 'STRING_VALUE',                  /* 非必须 */
   'x-cos-meta-*' : 'STRING_VALUE',                /* 非必须 */
   Body: 'Buffer || ReadStream || File || Blob',   /* 必须 */
-  onProgress : 'FUNCTION'                         /* 非必须 */
+  onProgress : function(progressData) {           /* 非必须 */
+    console.log(JSON.stringify(progressData));
+  }
 };
 cos.putObject(params, function(err, data) {
   if(err) {
