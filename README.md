@@ -211,7 +211,7 @@ function(err, data) { ... }
   * NextMarker —— (String)   ： 假如返回条目被截断，则返回NextMarker就是下一个条目的起点
   * Encoding-Type —— (String)  ： 返回值的编码方式，作用于Delimiter，Marker，Prefix，NextMarker，Key
   * Contents —— (Array)  ： 元数据信息
-    * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+    * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
     * Size —— (String)  ： 说明文件大小，单位是 Byte
     * Key —— (String)  ： Object名称
     * LastModified —— (String)  ： 说明 Object 最后被修改时间，如 2017-06-23T12:33:27.000Z
@@ -1265,7 +1265,7 @@ function(err, data) { ... }
 
 * **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
 * **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+  * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
   * LastModified —— (String)  ： 说明 Object 最后被修改时间，如 2017-06-23T12:33:27.000Z
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
@@ -1405,7 +1405,7 @@ function(err, data) { ... }
 
 * **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
 * **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * ETag —— (String)  ：  文件的 MD-5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+  * ETag —— (String)  ：  文件的 MD-5 算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
@@ -1461,7 +1461,7 @@ cos.multipartComplete(params, function(err, data) {
   * UploadId —— (String) ： 上传任务编号
   * Parts —— (Array) ： 用来说明本次分块上传中块的信息列表
     * PartNumber —— (String) ： 分块的编号
-    * ETag —— (String) ： 每个块文件的 MD5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+    * ETag —— (String) ： 每个块文件的 MD5 算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
 
 #### 回调函数说明
 
@@ -1475,7 +1475,7 @@ function(err, data) { ... }
   * Location —— (String)  ：  创建的Object的外网访问域名
   * Bucket —— (String)  ：  分块上传的目标Bucket
   * Key —— (String)  ：  Object的名称
-  * ETag —— (String)  ：  合并后文件的 MD5算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+  * ETag —— (String)  ：  合并后文件的 MD5算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
@@ -1773,7 +1773,7 @@ function(err, data) { ... }
   * Location —— (String)  ：  创建的Object的外网访问域名
   * Bucket —— (String)  ：  分块上传的目标Bucket
   * Key —— (String)  ：  Object的名称
-  * ETag —— (String)  ：  合并后文件的 MD5算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+  * ETag —— (String)  ：  合并后文件的 MD5算法校验值，如 `"22ca88419e2ed4721c23807c678adbe4c08a7880"`，**注意前后携带双引号**
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
