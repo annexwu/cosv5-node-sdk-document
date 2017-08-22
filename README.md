@@ -49,9 +49,9 @@ Get Service 接口是用来获取请求者名下的所有存储空间列表（Bu
 
 cos.getService(function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -101,9 +101,9 @@ var params = {
 
 cos.headBucket(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -153,9 +153,9 @@ var params = {
 
 cos.(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -226,9 +226,9 @@ var params = {
 
 cos.putBucket(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -278,9 +278,9 @@ var params = {
 
 cos.deleteBucket(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -324,9 +324,9 @@ var params = {
 
 cos.getBucketAcl(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -384,9 +384,9 @@ var params = {
 
 cos.putBucketAcl(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -436,9 +436,9 @@ var params = {
 
 cos.getBucketCors(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -510,9 +510,9 @@ var params = {
 
 cos.putBucketCors(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -563,9 +563,9 @@ var params = {
 
 cos.deleteBucketCors(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -610,9 +610,9 @@ var params = {
 
 cos.getBucketLocation(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -661,9 +661,9 @@ var params = {
 
 cos.headObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -728,9 +728,9 @@ var params = {
 
 cos.getObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -814,9 +814,9 @@ var params = {
 };
 cos.putObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 ```
@@ -884,9 +884,9 @@ var params = {
 
 cos.deleteObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -942,9 +942,9 @@ var params = {
 
 cos.optionsObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1002,9 +1002,9 @@ var params = {
 
 cos.getObjectAcl(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1064,9 +1064,9 @@ var params = {
 
 cos.putObjectAcl(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1125,9 +1125,9 @@ var params = {
 
 cos.deleteMultipleObject(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1206,9 +1206,9 @@ var params = {
 
 cos.putObjectCopy(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1282,9 +1282,9 @@ var params = {
 
 cos.multipartInit(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1353,9 +1353,9 @@ var params = {
 
 cos.multipartUpload(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1422,9 +1422,9 @@ var params = {
 
 cos.multipartComplete(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1483,9 +1483,9 @@ var params = {
 
 cos.multipartListPart(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1559,9 +1559,9 @@ var params = {
 
 cos.multipartAbort(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1614,9 +1614,9 @@ var params = {
 
 cos.multipartList(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
@@ -1696,21 +1696,21 @@ var params = {
   StorageClass: 'STRING_VALUE',   /* 非必须 */
   AsyncLimit: 'NUMBER_VALUE', /* 非必须 */
   TaskReady: function(TaskId) {       /* 非必须 */
-  console.log(TaskId);
+    console.log(TaskId);
   },
   onHashProgress: function (progressData) {       /* 非必须 */
-  console.log(JSON.stringify(progressData));
+    console.log(JSON.stringify(progressData));
   },
   onProgress: function (progressData) {           /* 非必须 */
-  console.log(JSON.stringify(progressData));
+    console.log(JSON.stringify(progressData));
   }
 };
 
 cos.sliceUploadFile(params, function(err, data) {
   if(err) {
-  console.log(err);
+    console.log(err);
   } else {
-  console.log(data);
+    console.log(data);
   }
 });
 
