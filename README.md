@@ -1226,7 +1226,6 @@ var params = {
   ContentType : 'STRING_VALUE',                   /* 非必须 */
   Expect : 'STRING_VALUE',                        /* 非必须 */
   Expires : 'STRING_VALUE',                       /* 非必须 */
-  ContentLanguage : 'STRING_VALUE',               /* 非必须 */
   'x-cos-meta-*' : 'STRING_VALUE',                /* 非必须 */
 };
 
@@ -1258,6 +1257,13 @@ cos.putObjectCopy(params, function(err, data) {
   * CopySourceIfNoneMatch —— (String) ： 当 Object 的 Etag 和给定不一致时，则执行操作，否则返回 412。**可与 CopySourceIfModifiedSince 一起使用，与其他条件联合使用返回冲突**
   * StorageClass —— (String) ： 存储级别，枚举值：存储级别，枚举值：Standard, Standard_IA，Nearline；默认值：Standard
   * x-cos-meta-* —— (String) ： 其他自定义的文件头部
+  * CacheControl —— (String) ：  指定所有缓存机制在整个请求/响应链中必须服从的指令
+  * ContentDisposition —— (String) ： MIME 协议的扩展，MIME 协议指示 MIME 用户代理如何显示附加的文件
+  * ContentEncoding —— (String) ： HTTP 中用来对「采用何种编码格式传输正文」进行协定的一对头部字段
+  * ContentLength —— (String) ： 设置响应消息的实体内容的大小，单位为字节
+  * ContentType —— (String) ： RFC 2616 中定义的 HTTP 请求内容类型（MIME），例如text/plain
+  * Expect —— (String) ： 请求的特定的服务器行为
+  * Expires —— (String) ： 响应过期的日期和时间
 
 
 #### 回调函数说明
