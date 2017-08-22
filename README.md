@@ -547,7 +547,7 @@ cos.putBucketCors(params, function(err, data) {
     * ID —— (String) ： 配置规则的 ID，可选填
     * AllowedMethods —— (Array) ： 允许的 HTTP 操作，枚举值：GET，PUT，HEAD，POST，DELETE
     * AllowedOrigins —— (Array) ： 允许的访问来源，支持通配符 * 格式为：协议://域名[:端口]如：http://www.qq.com
-    * AllowedHeaders —— (Array) ： 在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，**暂不支持通配符\*** 
+    * AllowedHeaders —— (Array) ： 在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，**暂不支持通配符 "*"** 
     * ExposeHeaders —— (Array) ：  设置浏览器可以接收到的来自服务器端的自定义头部信息
     * MaxAgeSeconds —— (String) ： 设置 OPTIONS 请求得到结果的有效期
 
