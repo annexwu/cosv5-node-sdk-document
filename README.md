@@ -26,11 +26,28 @@ npm i cos-nodejs-sdk-v5 --save
 ```js
 var COS = require('cos-nodejs-sdk-v5');
 var cos = new COS({
-  AppId: '1250000000',
-  SecretId: 'AKIDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  SecretKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  AppId: 'STRING_VALUE',                                /* 必须 */
+  SecretId: 'STRING_VALUE',                             /* 必须 */
+  SecretKey: 'STRING_VALUE',                            /* 必须 */
+  FileParallelLimit: 'NUMBER_VALUE',                    /* 非必须 */
+  ChunkParallelLimit: 'NUMBER_VALUE',                   /* 非必须 */
+  ChunkSize: 'NUMBER_VALUE',                            /* 非必须 */
+  ProgressInterval: 'NUMBER_VALUE',                     /* 非必须 */
+  Domain: 'STRING_VALUE',                               /* 非必须 */
 });
 ```
+
+#### 操作参数说明
+
+* **params** (Object) ： 参数列表
+  * AppId —— (String) ： 用户的 AppId         
+  * SecretId —— (String) ： 用户的 SecretId
+  * SecretKey —— (String) ： 用户的 SecretKey
+  * FileParallelLimit —— (Number) ： 控制文件上传并发数，默认为 3 
+  * ChunkParallelLimit —— (Number) ： 控制单个文件下分片上传并发数，默认为 3 
+  * ChunkSize —— (Number) ： 控制分片大小，单位 Byte，默认为 1 * 1024 * 1024 ，即 1 MB
+  * ProgressInterval —— (Number) ： 控制 onProgress 回调的间隔，单位为 ms，用于防止 onProgress 频繁触发造成的抖动，默认为 1000
+  * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com，例如 annexwu-123456789.cn-north.{{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com
 
 
 ## Service操作
@@ -527,7 +544,7 @@ cos.putBucketCors(params, function(err, data) {
     * ID —— (String) ： 配置规则的 ID，可选填
     * AllowedMethods —— (Array) ： 允许的 HTTP 操作，枚举值：GET，PUT，HEAD，POST，DELETE
     * AllowedOrigins —— (Array) ： 允许的访问来源，支持通配符 * 格式为：协议://域名[:端口]如：http://www.qq.com
-    * AllowedHeaders —— (Array) ： 在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，支持通配符 * 
+    * AllowedHeaders —— (Array) ： 在发送 OPTIONS 请求时告知服务端，接下来的请求可以使用哪些自定义的 HTTP 请求头部，**暂不支持通配符 * ** 
     * ExposeHeaders —— (Array) ：  设置浏览器可以接收到的来自服务器端的自定义头部信息
     * MaxAgeSeconds —— (String) ： 设置 OPTIONS 请求得到结果的有效期
 
@@ -784,6 +801,8 @@ function(err, data) { ... }
 Put Object 接口请求可以将本地的文件（Object）上传至指定 Bucket 中。该操作需要请求者对 Bucket 有 WRITE 权限。
 
 **注意，Key(文件名) 不能以 `/` 结尾，否则会被识别为文件夹 **
+
+**单个 Bucket 下 acl 策略限制 1000 条，因此在单个 bucket 下，最多允许对 999 个文件设置 acl 权限 **
 
 #### 操作方法原型
 
@@ -1043,6 +1062,8 @@ function(err, data) { ... }
 #### 功能说明
 
 Put Object ACL 接口用来对某个 Bucket 中的某个的 Object 进行 ACL 表的配置
+
+**单个 Bucket 下 acl 策略限制 1000 条，因此在单个 bucket 下，最多允许对 999 个文件设置 acl 权限 **
 
 #### 操作方法原型
 
@@ -1693,8 +1714,8 @@ var params = {
   SliceSize: 'STRING_VALUE',                      /* 非必须 */
   StorageClass: 'STRING_VALUE',                   /* 非必须 */
   AsyncLimit: 'NUMBER_VALUE',                     /* 非必须 */
-  TaskReady: function(TaskId) {                   /* 非必须 */
-    console.log(TaskId);
+  TaskReady: function(taskId) {                   /* 非必须 */
+    console.log(taskId);
   },
   onHashProgress: function (progressData) {       /* 非必须 */
     console.log(JSON.stringify(progressData));
@@ -1724,8 +1745,8 @@ cos.sliceUploadFile(params, function(err, data) {
   * SliceSize —— (String) ： 分块大小
   * AsyncLimit —— (String) ： 分块的并发量
   * StorageClass —— (String) ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
-  * TaskReady —— (Function)  ： 上传任务创建时的回调函数，返回一个TaskId，唯一标识上传任务，可用于上传任务的取消（cancelTask），停止（pauseTask）和重新开始（restartTask）
-  * taskId —— (String) ： 上传任务的编号
+  * TaskReady —— (Function)  ： 上传任务创建时的回调函数，返回一个taskId，唯一标识上传任务，可用于上传任务的取消（cancelTask），停止（pauseTask）和重新开始（restartTask）
+    * taskId —— (String) ： 上传任务的编号
   * onHashProgress —— (Function)  ： 计算文件MD5值的进度回调函数，回调参数为进度对象 progressData
     * progressData.loaded —— (Number) ： 已经校验的文件部分大小，以字节（bytes）为单位
     * progressData.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
@@ -1760,7 +1781,7 @@ function(err, data) { ... }
 
 #### 功能说明
 
-根据 TaskId 取消分块上传任务
+根据 taskId 取消分块上传任务
 
 
 #### 操作方法原型
@@ -1769,15 +1790,15 @@ function(err, data) { ... }
 
 ```js
 
-var TaskId = 'xxxxx';                   /* 必须 */
+var taskId = 'xxxxx';                   /* 必须 */
 
-cos.cancelTask(TaskId);
+cos.cancelTask(taskId);
 
 ```
 
 #### 操作参数说明
 
-* **TaskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 TaskId 
+* **taskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 taskId 
 
 
 
@@ -1786,7 +1807,7 @@ cos.cancelTask(TaskId);
 
 #### 功能说明
 
-根据 TaskId 暂停分块上传任务
+根据 taskId 暂停分块上传任务
 
 
 #### 操作方法原型
@@ -1795,15 +1816,15 @@ cos.cancelTask(TaskId);
 
 ```js
 
-var TaskId = 'xxxxx';                   /* 必须 */
+var taskId = 'xxxxx';                   /* 必须 */
 
-cos.pauseTask(TaskId);
+cos.pauseTask(taskId);
 
 ```
 
 #### 操作参数说明
 
-* **TaskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 TaskId 
+* **taskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 taskId 
 
 
 
@@ -1812,7 +1833,7 @@ cos.pauseTask(TaskId);
 
 #### 功能说明
 
-根据 TaskId 重新开始上传任务，可以用于开启用户手动停止的（调用 pauseTask 停止）或者因为上传错误而停止的上传任务。
+根据 taskId 重新开始上传任务，可以用于开启用户手动停止的（调用 pauseTask 停止）或者因为上传错误而停止的上传任务。
 
 
 #### 操作方法原型
@@ -1821,12 +1842,12 @@ cos.pauseTask(TaskId);
 
 ```js
 
-var TaskId = 'xxxxx';                   /* 必须 */
+var taskId = 'xxxxx';                   /* 必须 */
 
-cos.restartTask(TaskId);
+cos.restartTask(taskId);
 
 ```
 
 #### 操作参数说明
 
-* **TaskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 TaskId 
+* **taskId** (String) ：文件上传任务的编号，在调用 sliceUploadFile 方法时，其 TaskReady 回调会返回该上传任务的 taskId 
