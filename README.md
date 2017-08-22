@@ -803,7 +803,7 @@ function(err, data) { ... }
 
 Put Object 接口请求可以将本地的文件（Object）上传至指定 Bucket 中。该操作需要请求者对 Bucket 有 WRITE 权限。
 
-** 注意，Key(文件名) 不能以 `/` 结尾，否则会被识别为文件夹 **
+**注意，Key(文件名) 不能以 `/` 结尾，否则会被识别为文件夹**
 
 **单个 Bucket 下 acl 策略限制 1000 条，因此在单个 bucket 下，最多允许对 999 个文件设置 acl 权限**
 
