@@ -930,10 +930,10 @@ Options Object 接口实现 Object 跨域访问配置的预请求。即在发送
 ```js
 
 var params = {
-  Bucket : 'STRING_VALUE',        /* 必须 */
-  Region : 'STRING_VALUE',        /* 必须 */
-  Key : 'STRING_VALUE',           /* 必须 */
-  Origin : 'STRING_VALUE',        /* 必须 */
+  Bucket : 'STRING_VALUE',                            /* 必须 */
+  Region : 'STRING_VALUE',                            /* 必须 */
+  Key : 'STRING_VALUE',                               /* 必须 */
+  Origin : 'STRING_VALUE',                            /* 必须 */
   AccessControlRequestMethod : 'STRING_VALUE',        /* 必须 */
   AccessControlRequestHeaders : 'STRING_VALUE'        /* 非必须 */
 };
