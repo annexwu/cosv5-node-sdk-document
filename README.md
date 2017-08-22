@@ -151,7 +151,7 @@ var params = {
   EncodingType : 'STRING_VALUE',  /* 非必须 */
 };
 
-cos.(params, function(err, data) {
+cos.getBucket(params, function(err, data) {
   if(err) {
     console.log(err);
   } else {
@@ -182,7 +182,7 @@ function(err, data) { ... }
 * **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
 * **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
   * CommonPrefixes —— (Array)  ：  将 Prefix 到 delimiter 之间的相同路径归为一类，定义为 Common Prefix
-  * Prefix —— (String) ：单条 Common 的前缀
+    * Prefix —— (String) ：单条 Common 的前缀
   * Name —— (String)   ：  说明 Bucket 的信息
   * Prefix —— (String)  ： 前缀匹配，用来规定返回的文件前缀地址
   * Marker —— (String)  ： 默认以 UTF-8 二进制顺序列出条目，所有列出条目从 marker 开始
@@ -191,13 +191,13 @@ function(err, data) { ... }
   * NextMarker —— (String)   ： 假如返回条目被截断，则返回NextMarker就是下一个条目的起点
   * Encoding-Type —— (String)  ： 返回值的编码方式，作用于Delimiter，Marker，Prefix，NextMarker，Key
   * Contents —— (Array)  ： 元数据信息
-  * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
-  * Size —— (String)  ： 说明文件大小，单位是 Byte
-  * Key —— (String)  ： Object名称
-  * LastModified —— (String)  ： 说明 Object 最后被修改时间，如 2017-06-23T12:33:27.000Z
-  * Owner —— (Object)  ： Bucket 持有者信息
-  * ID —— (String)  ： Bucket 的 AppID
-  * StorageClass —— (String)  ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
+    * ETag —— (String)  ： 文件的 MD-5 算法校验值，如 "22ca88419e2ed4721c23807c678adbe4c08a7880"，注意前后携带双引号
+    * Size —— (String)  ： 说明文件大小，单位是 Byte
+    * Key —— (String)  ： Object名称
+    * LastModified —— (String)  ： 说明 Object 最后被修改时间，如 2017-06-23T12:33:27.000Z
+    * Owner —— (Object)  ： Bucket 持有者信息
+      * ID —— (String)  ： Bucket 的 AppID
+    * StorageClass —— (String)  ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
@@ -487,20 +487,20 @@ var params = {
     {
       ID : 'STRING_VALUE',    /* 非必须 */
       AllowedMethods: [       /* 必须 */
-      'STRING_VALUE',
-      ...
+        'STRING_VALUE',
+        ...
       ],
       AllowedOrigins: [        /* 必须 */
-      'STRING_VALUE',
-      ...
+        'STRING_VALUE',
+        ...
       ],
       AllowedHeaders: [       /* 非必须 */
-      'STRING_VALUE',
-      ...
+        'STRING_VALUE',
+        ...
       ],
       ExposeHeaders: [        /* 非必须 */
-      'STRING_VALUE',
-      ...
+        'STRING_VALUE',
+        ...
       ],
       MaxAgeSeconds: 'STRING_VALUE'   /* 非必须 */
     },
@@ -754,11 +754,11 @@ cos.getObject(params, function(err, data) {
   * IfMatch —— (String) ： 当 ETag 与指定的内容一致，才返回文件。否则返回 412 (precondition failed)
   * IfNoneMatch —— (String) ： 当 ETag 与指定的内容不一致，才返回文件。否则返回304 (not modified)
   * Output —— (WriteStream) ： 需要输出文件的写流
-  * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（obj）属性如下
-    * obj.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
-    * obj.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
-    * obj.speed —— (Number) ： 文件的下载速度，以字节/秒（bytes/s）为单位
-    * obj.percent —— (Number) ： 文件下载的百分比，以小数形式呈现，例如：下载 50% 即为 0.5
+  * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（progressData）属性如下
+    * progressData.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
+    * progressData.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
+    * progressData.speed —— (Number) ： 文件的下载速度，以字节/秒（bytes/s）为单位
+    * progressData.percent —— (Number) ： 文件下载的百分比，以小数形式呈现，例如：下载 50% 即为 0.5
 
 #### 回调函数说明
 
@@ -808,9 +808,7 @@ var params = {
   StorageClass : 'STRING_VALUE',                  /* 非必须 */
   'x-cos-meta-*' : 'STRING_VALUE',                /* 非必须 */
   Body: 'Buffer || ReadStream || File || Blob',   /* 必须 */
-  onProgress: function (progressData) {
-  console.log(progressData);
-  },
+  onProgress : 'FUNCTION'                         /* 非必须 */
 };
 cos.putObject(params, function(err, data) {
   if(err) {
@@ -841,11 +839,11 @@ cos.putObject(params, function(err, data) {
   * StorageClass —— (String) ： 设置 Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE，默认值：STANDARD
   * x-cos-meta-* —— (String) ： 允许用户自定义的头部信息，将作为 Object 元数据返回。大小限制 2K
   * Body —— (Buffer || ReadStream || File || Blob)  ： 上传文件的内容或者流
-  * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（obj）属性如下
-    * obj.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
-    * obj.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
-    * obj.speed —— (Number) ： 文件的下载速度，以字节/秒（bytes/s）为单位
-    * obj.percent —— (Number) ： 文件下载的百分比，以小数形式呈现，例如：下载 50% 即为 0.5
+  * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（progressData）属性如下
+    * progressData.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
+    * progressData.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
+    * progressData.speed —— (Number) ： 文件的下载速度，以字节/秒（bytes/s）为单位
+    * progressData.percent —— (Number) ： 文件下载的百分比，以小数形式呈现，例如：下载 50% 即为 0.5
 
 
 
@@ -1412,11 +1410,11 @@ var params = {
   Key : 'STRING_VALUE',                           /* 必须 */
   UploadId : 'STRING_VALUE',                      /* 必须 */
   Parts : [
-  {
-    PartNumber : 'STRING_VALUE',            /* 必须 */
-    ETag : 'STRING_VALUE'                   /* 必须 */
-  },
-  ...
+    {
+      PartNumber : 'STRING_VALUE',            /* 必须 */
+      ETag : 'STRING_VALUE'                   /* 必须 */
+    },
+    ...
   ]
 };
 
@@ -1661,11 +1659,11 @@ function(err, data) { ... }
     * UploadId —— (String)  ： 标示本次分块上传的 ID
     * StorageClass —— (String)  ：  用来表示分块的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
     * Initiator —— (Object)  ：   用来表示本次上传发起者的信息
-    * DisplayName —— (String)  ：  上传发起者的名称
-    * ID —— (String)  ：  上传发起者 ID，格式：qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin> 如果是根帐号，&lt;OwnerUin> 和 &lt;SubUin> 是同一个值
+      * DisplayName —— (String)  ：  上传发起者的名称
+      * ID —— (String)  ：  上传发起者 ID，格式：qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin> 如果是根帐号，&lt;OwnerUin> 和 &lt;SubUin> 是同一个值
     * Owner —— (Object)  ：  用来表示这些分块所有者的信息
-    * DisplayName —— (String)  ：  Bucket 持有者的名称
-    * ID —— (String)  ：  Bucket 持有者 ID，格式：qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin> 如果是根帐号，&lt;OwnerUin> 和 &lt;SubUin> 是同一个值
+      * DisplayName —— (String)  ：  Bucket 持有者的名称
+      * ID —— (String)  ：  Bucket 持有者 ID，格式：qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin> 如果是根帐号，&lt;OwnerUin> 和 &lt;SubUin> 是同一个值
     * Initiated —— (String)  ：  分块上传的起始时间
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
