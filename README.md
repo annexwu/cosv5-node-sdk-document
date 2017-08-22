@@ -25,7 +25,8 @@ npm i cos-nodejs-sdk-v5 --save
 
 ```js
 var COS = require('cos-nodejs-sdk-v5');
-var cos = new COS({
+
+var parmas = {
   AppId: 'STRING_VALUE',                                /* 必须 */
   SecretId: 'STRING_VALUE',                             /* 必须 */
   SecretKey: 'STRING_VALUE',                            /* 必须 */
@@ -34,7 +35,9 @@ var cos = new COS({
   ChunkSize: 'NUMBER_VALUE',                            /* 非必须 */
   ProgressInterval: 'NUMBER_VALUE',                     /* 非必须 */
   Domain: 'STRING_VALUE',                               /* 非必须 */
-});
+};
+
+var cos = new COS(params);
 ```
 
 #### 操作参数说明
@@ -47,7 +50,7 @@ var cos = new COS({
   * ChunkParallelLimit —— (Number) ： 控制单个文件下分片上传并发数，默认为 3 
   * ChunkSize —— (Number) ： 控制分片大小，单位 Byte，默认为 1 * 1024 * 1024 ，即 1 MB
   * ProgressInterval —— (Number) ： 控制 onProgress 回调的间隔，单位为 ms，用于防止 onProgress 频繁触发造成的抖动，默认为 1000
-  * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com，例如 annexwu-123456789.cn-north.{{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com
+  * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com，例如 annexwu-123456789.cn-north.myqcloud.com
 
 
 ## Service操作
@@ -800,9 +803,9 @@ function(err, data) { ... }
 
 Put Object 接口请求可以将本地的文件（Object）上传至指定 Bucket 中。该操作需要请求者对 Bucket 有 WRITE 权限。
 
-**注意，Key(文件名) 不能以 `/` 结尾，否则会被识别为文件夹 **
+** 注意，Key(文件名) 不能以 `/` 结尾，否则会被识别为文件夹 **
 
-**单个 Bucket 下 acl 策略限制 1000 条，因此在单个 bucket 下，最多允许对 999 个文件设置 acl 权限 **
+** 单个 Bucket 下 acl 策略限制 1000 条，因此在单个 bucket 下，最多允许对 999 个文件设置 acl 权限 **
 
 #### 操作方法原型
 
