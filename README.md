@@ -53,6 +53,44 @@ var cos = new COS(params);
   * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com，例如 annexwu-123456789.cn-north.myqcloud.com
 
 
+## Get Auth 操作
+
+### Get Auth
+
+#### 功能说明
+
+Get Auth 用于计算鉴权信息（Authorization）， 用以验证请求合法性的签名信息。
+
+#### 操作方法原型
+
+* 调用 Get Auth 操作
+
+```js
+
+var parmas = {
+  Method: 'STRING_VALUE',                          /* 必须 */
+  Key: 'STRING_VALUE',                             /* 非必须 */
+  SecretId: 'STRING_VALUE',                        /* 非必须 */
+  SecretKey: 'STRING_VALUE',                       /* 非必须 */
+};
+
+var Authorization = cos.getAuth(params);
+
+```
+
+#### 操作参数说明
+
+* **params** (Object) ： 参数列表
+  * Method —— (String) ： 操作方法，如 get, post, delete, head 等 HTTP 方法
+  * Key —— (String) ： 操作的 object 名称，如果请求操作是对文件的，则为文件名，且为必须参数。如果操作是对于 Bucket，则为空
+  * SecretId —— (String) ： 用户的 SecretId，如果 SecretId 和 COS 实例创建时相同，则可以不填
+  * SecretKey —— (String) ： 用户的 SecretKey，如果 SecretKey 和 COS 实例创建时相同，则可以不填
+
+#### 返回值说明
+
+  * Authorization —— (String) ： 操作的鉴权签名
+
+
 ## Service操作
 
 ### Get Service
