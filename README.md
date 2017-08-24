@@ -26,14 +26,14 @@ npm i cos-nodejs-sdk-v5 --save
 ```js
 var COS = require('cos-nodejs-sdk-v5');
 
-var parmas = {
+var params = {
   AppId: 'STRING_VALUE',                                /* 必须 */
   SecretId: 'STRING_VALUE',                             /* 必须 */
   SecretKey: 'STRING_VALUE',                            /* 必须 */
-  FileParallelLimit: 'NUMBER_VALUE',                    /* 非必须 */
-  ChunkParallelLimit: 'NUMBER_VALUE',                   /* 非必须 */
-  ChunkSize: 'NUMBER_VALUE',                            /* 非必须 */
-  ProgressInterval: 'NUMBER_VALUE',                     /* 非必须 */
+  FileParallelLimit: 'NUMBER',                          /* 非必须 */
+  ChunkParallelLimit: 'NUMBER',                         /* 非必须 */
+  ChunkSize: 'NUMBER',                                  /* 非必须 */
+  ProgressInterval: 'NUMBER',                           /* 非必须 */
   Domain: 'STRING_VALUE',                               /* 非必须 */
 };
 
@@ -50,7 +50,7 @@ var cos = new COS(params);
   * ChunkParallelLimit —— (Number) ： 控制单个文件下分片上传并发数，默认为 3 
   * ChunkSize —— (Number) ： 控制分片大小，单位 Byte，默认为 1 * 1024 * 1024 ，即 1 MB
   * ProgressInterval —— (Number) ： 控制 onProgress 回调的间隔，单位为 ms，用于防止 onProgress 频繁触发造成的抖动，默认为 1000
-  * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.{{Region}}.myqcloud.com，例如 annexwu-123456789.cn-north.myqcloud.com
+  * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.cos.{{Region}}.myqcloud.com，例如 annexwu-123456789.cos.cn-north.myqcloud.com
 
 
 ## 鉴权操作
@@ -67,7 +67,7 @@ Get Auth 用于计算鉴权信息（Authorization）， 用以验证请求合法
 
 ```js
 
-var parmas = {
+var params = {
   Method: 'STRING_VALUE',                          /* 必须 */
   Key: 'STRING_VALUE',                             /* 非必须 */
   SecretId: 'STRING_VALUE',                        /* 非必须 */
@@ -1762,7 +1762,7 @@ var params = {
   FilePath: 'STRING_VALUE',                       /* 必须 */
   SliceSize: 'STRING_VALUE',                      /* 非必须 */
   StorageClass: 'STRING_VALUE',                   /* 非必须 */
-  AsyncLimit: 'NUMBER_VALUE',                     /* 非必须 */
+  AsyncLimit: 'NUMBER',                           /* 非必须 */
   TaskReady: function(taskId) {                   /* 非必须 */
     console.log(taskId);
   },
