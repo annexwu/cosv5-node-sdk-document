@@ -1222,7 +1222,6 @@ var params = {
   CacheControl : 'STRING_VALUE',                  /* 非必须 */
   ContentDisposition : 'STRING_VALUE',            /* 非必须 */
   ContentEncoding : 'STRING_VALUE',               /* 非必须 */
-  ContentLength : 'STRING_VALUE',                 /* 非必须 */
   ContentType : 'STRING_VALUE',                   /* 非必须 */
   Expect : 'STRING_VALUE',                        /* 非必须 */
   Expires : 'STRING_VALUE',                       /* 非必须 */
@@ -1260,7 +1259,6 @@ cos.putObjectCopy(params, function(err, data) {
   * CacheControl —— (String) ：  指定所有缓存机制在整个请求/响应链中必须服从的指令
   * ContentDisposition —— (String) ： MIME 协议的扩展，MIME 协议指示 MIME 用户代理如何显示附加的文件
   * ContentEncoding —— (String) ： HTTP 中用来对「采用何种编码格式传输正文」进行协定的一对头部字段
-  * ContentLength —— (String) ： 设置响应消息的实体内容的大小，单位为字节
   * ContentType —— (String) ： RFC 2616 中定义的 HTTP 请求内容类型（MIME），例如text/plain
   * Expect —— (String) ： 请求的特定的服务器行为
   * Expires —— (String) ： 响应过期的日期和时间
