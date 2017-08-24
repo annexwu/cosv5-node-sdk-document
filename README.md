@@ -691,7 +691,7 @@ function(err, data) { ... }
 
 * **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
 * **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * LocationConstraint —— (String)  ：  说明 Bucket 所在区域，枚举值：cn-north，cn-east，sg，cn-southwest，cn-south
+  * LocationConstraint —— (String)  ：  Bucket 所在区域。枚举值：`ap-beijing-1`，`ap-beijing`，`ap-shanghai`，`ap-guangzhou`，`ap-guangzhou-2`，`ap-chengdu`，`ap-singapore`，`ap-hongkong`，`na-toronto`，`eu-frankfurt`。 **注意：旧的地域名称 `cn-north` ，`cn-east`，`cn-south`，`cn-southwest`，`sg` 分别对应新的地域名称`ap-beijing-1`，`ap-shanghai`，`ap-guangzhou`，`ap-chengdu`，`ap-singapore`**
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
