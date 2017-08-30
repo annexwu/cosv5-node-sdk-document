@@ -2,10 +2,10 @@
 
 ### 相关资源
 
-COS服务的** 前端 js SDK v5版本 **的GitHub下载地址： [https://github.com/tencentyun/cos-js-sdk-v5.git](https://github.com/tencentyun/cos-nodejs-sdk-v5.git) 
+COS服务的 **前端 js SDK v5版本**的GitHub下载地址： [https://github.com/tencentyun/cos-js-sdk-v5.git](https://github.com/tencentyun/cos-nodejs-sdk-v5.git) 
 （本版本SDK基于XML API封装组成）
 
-** 前端 js SDK v5版本 **接口的使用 demo 在这里： [demo](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/demo.js)
+ **前端 js SDK v5版本**接口的使用 demo 在这里： [demo](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/demo.js)
 
 ### npm 引入
 
@@ -1358,7 +1358,7 @@ cos.multipartUpload(params, function(err, data) {
   * ContentLength —— (String) ： RFC 2616 中定义的 HTTP 请求内容长度（字节）
   * PartNumber —— (String) ： 分块的编号
   * UploadId —— (String) ： 上传任务编号
-  * Body —— (String || File || Blob)  ： 上传文件的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
+  * Body —— (String || File || Blob)  ： 上传文件分块的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
   * Expect —— (String) ： 当使用 Expect: 100-continue 时，在收到服务端确认后，才会发送请求内容
   * ContentMD5 —— (String) ： RFC 1864 中定义的经过Base64编码的128-bit 内容 MD5 校验值。此头部用来校验文件内容是否发生变化
 
