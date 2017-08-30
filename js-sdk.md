@@ -2,34 +2,63 @@
 
 ### 相关资源
 
-COS服务的Node.js SDK v5版本的GitHub下载地址： [https://github.com/tencentyun/cos-nodejs-sdk-v5.git](https://github.com/tencentyun/cos-nodejs-sdk-v5.git) 
+COS服务的** 前端 js SDK v5版本 **的GitHub下载地址： [https://github.com/tencentyun/cos-js-sdk-v5.git](https://github.com/tencentyun/cos-nodejs-sdk-v5.git) 
 （本版本SDK基于XML API封装组成）
 
-大部分接口的使用 demo 在这里： [demo](https://github.com/tencentyun/cos-nodejs-sdk-v5/blob/master/demo/demo.js)
+** 前端 js SDK v5版本 **接口的使用 demo 在这里： [demo](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/demo.js)
 
 ### npm 引入
 
 ```shell
-npm i cos-nodejs-sdk-v5 --save
+<script src="../dist/cos-js-sdk-v5.js"></script>
 ```
 
 
 ### 开发环境
 
-1. 使用SDK需要您的运行环境包含nodejs 以及npm , nodejs版本建议7.0版本以上
-2. 安装好 npm 之后记得在sdk的解压目录npm install 一次（安装依赖包）；
-3. 去您的控制台获取 AppId, SecretId, SecretKey, 地址在 https://console.qcloud.com/capi
+1. 使用 SDK 需要浏览器支持HTML 5
+2. 去您的控制台获取 AppId, SecretId, SecretKey, 地址在 https://console.qcloud.com/capi
+3. 请您到控制台操作，**针对您要操作的bucket进行跨域（CORS）设置**, 可以按照如下范例，**修改允许的来源 Origin 和 Headers**, 控制台地址在 https://console.qcloud.com/cos
+
+![Bucket 跨域设置](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/cors.png)
 
 
 ### SDK配置
 
 ```js
-var COS = require('cos-nodejs-sdk-v5');
+
+// 获取鉴权签名的回调函数
+var getAuthorization = function (options, callback) {
+
+    // 方法一，将 COS 操作的 method 和 pathname 传递给服务端，由服务端计算签名返回（推荐）
+    var method = (options.method || 'get').toLowerCase();
+    var pathname = options.pathname || '/';
+
+    // 将 method 和 pathname 参数传递给服务端，此处是举例
+    var url = '../server/auth.php?method=' + method + '&pathname=' + pathname;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onload = function (e) {
+      callback(e.target.responseText);
+    };
+    xhr.send();
+
+    // 方法二，直接在前端利用 SecretId 和 SecretKey 计算签名，适合前端调试使用，不提倡在前端暴露 SecretId 和 SecretKey 
+    /*
+    var authorization = COS.getAuthorization({
+      SecretId: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      SecretKey: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      method: (options.method || 'get').toLowerCase(),
+      pathname: options.pathname || '/',
+    });
+    callback(authorization);
+    */
+};
 
 var params = {
   AppId: 'STRING_VALUE',                                /* 必须 */
-  SecretId: 'STRING_VALUE',                             /* 必须 */
-  SecretKey: 'STRING_VALUE',                            /* 必须 */
+  getAuthorization: getAuthorization                    /* 必须 */
   FileParallelLimit: 'NUMBER',                          /* 非必须 */
   ChunkParallelLimit: 'NUMBER',                         /* 非必须 */
   ChunkSize: 'NUMBER',                                  /* 非必须 */
@@ -43,97 +72,52 @@ var cos = new COS(params);
 #### 操作参数说明
 
 * **params** (Object) ： 参数列表
-  * AppId —— (String) ： 用户的 AppId         
-  * SecretId —— (String) ： 用户的 SecretId
-  * SecretKey —— (String) ： 用户的 SecretKey
   * FileParallelLimit —— (Number) ： 控制文件上传并发数，默认为 3 
   * ChunkParallelLimit —— (Number) ： 控制单个文件下分片上传并发数，默认为 3 
   * ChunkSize —— (Number) ： 控制分片大小，单位 Byte，默认为 1 * 1024 * 1024 ，即 1 MB
   * ProgressInterval —— (Number) ： 控制 onProgress 回调的间隔，单位为 ms，用于防止 onProgress 频繁触发造成的抖动，默认为 1000
   * Domain —— (String) ： 用户的自定义域名，如果设置了自定义域名，则所有对 Bucket 和 Object 的操作请求将发送到自定义域名。默认对 Bucket 的操作域名为 {{Bucket}}-{{AppId}}.cos.{{Region}}.myqcloud.com，例如 annexwu-123456789.cos.ap-beijing-1.myqcloud.com
+  * getAuthorization —— (Function) ： 获取鉴权签名的回调函数
+
 
 
 ## 鉴权操作
 
-### Get Auth
+### Get Authorization
 
 #### 功能说明
 
-Get Auth 用于计算鉴权信息（Authorization）， 用以验证请求合法性的签名信息。
+Get Authorization 用于计算鉴权信息（Authorization）， 用以验证请求合法性的签名信息。
+** 该方法推荐在前端调试时使用，项目上线不推荐使用前端计算签名的方法，有暴露秘钥的风险**
 
 #### 操作方法原型
 
-* 调用 Get Auth 操作
+* 调用 Get Authorization 操作
 
 ```js
 
 var params = {
-  Method: 'STRING_VALUE',                          /* 必须 */
-  Key: 'STRING_VALUE',                             /* 非必须 */
+  method: 'STRING_VALUE',                          /* 必须 */
+  pathname: 'STRING_VALUE',                             /* 非必须 */
   SecretId: 'STRING_VALUE',                        /* 非必须 */
   SecretKey: 'STRING_VALUE',                       /* 非必须 */
 };
 
-var Authorization = cos.getAuth(params);
+var Authorization = COS.getAuthorization(params);
 
 ```
 
 #### 操作参数说明
 
 * **params** (Object) ： 参数列表
-  * Method —— (String) ： 操作方法，如 get, post, delete, head 等 HTTP 方法
-  * Key —— (String) ： 操作的 object 名称，**如果请求操作是对文件的，则为文件名，且为必须参数**。如果操作是对于 Bucket，则为空
+  * method —— (String) ： 操作方法，如 get, post, delete, head 等 HTTP 方法
+  * pathname —— (String) ： 操作的 object 名称，**如果请求操作是对文件的，则为文件名，且为必须参数**。如果操作是对于 Bucket，则为空
   * SecretId —— (String) ： 用户的 SecretId，如果 SecretId 和 COS 实例创建时相同，则可以不填
   * SecretKey —— (String) ： 用户的 SecretKey，如果 SecretKey 和 COS 实例创建时相同，则可以不填
 
 #### 返回值说明
 
   * Authorization —— (String) ： 操作的鉴权签名
-
-
-## Service操作
-
-### Get Service
-
-#### 功能说明
-
-Get Service 接口是用来获取请求者名下的所有存储空间列表（Bucket list）。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能获取 Bucket 列表，且只能获取签名中 AccessID 所属账户的 Bucket 列表。
-
-#### 操作方法原型
-
-* 调用 Get Service 操作
-
-```js
-
-cos.getService(function(err, data) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
-});
-
-```
-
-#### 操作参数说明
-
-* **无特殊参数** 
-
-#### 回调函数说明
-
-```js
-function(err, data) { ... }
-```
-#### 回调参数说明
-
-* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。 
-* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * Buckets —— (Array) ：说明本次返回的Bucket列表的所有信息
-    * Name —— (String) ：Bucket 的名称
-    * CreateDate —— (String) ：Bucket 创建时间。ISO8601 格式，例如 2016-11-09T08:46:32.000Z
-    * Location —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
-  * headers —— (Object)：    请求返回的头部信息
-  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
 
 
@@ -258,62 +242,6 @@ function(err, data) { ... }
     * StorageClass —— (String)  ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
-
-
-
-###  Put Bucket
-
-#### 功能说明
-
-Put Bucket 接口请求可以在指定账号下创建一个 Bucket。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能创建新的 Bucket 。创建 Bucket 的用户默认成为 Bucket 的持有者。
-
-#### 操作方法原型
-
-* 调用 Put Bucket 操作
-
-```js
-
-var params = {
-  Bucket : 'STRING_VALUE',            /* 必须 */
-  Region : 'STRING_VALUE',            /* 必须 */
-  ACL : 'STRING_VALUE',               /* 非必须 */
-  GrantRead : 'STRING_VALUE',         /* 非必须 */
-  GrantWrite : 'STRING_VALUE',        /* 非必须 */
-  GrantFullControl : 'STRING_VALUE'   /* 非必须 */
-};
-
-cos.putBucket(params, function(err, data) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
-});
-
-```
-
-#### 操作参数说明
-
-* **params** (Object) ： 参数列表
-  * Bucket —— (String) ： Bucket 名称      
-  * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
-  * ACL —— (String)  ： 定义 Object 的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
-  * GrantRead —— (String)  ： 赋予被授权者读的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-  * GrantWrite —— (String)  ： 赋予被授权者写的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-  * GrantFullControl —— (String)  ： 赋予被授权者读写权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-
-#### 回调函数说明
-
-```js
-function(err, data) { ... }
-```
-#### 回调参数说明
-
-* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
-* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * Location —— (String)  ：  创建成功后，Bucket 的操作地址
-  * headers —— (Object)：    请求返回的头部信息
-  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404 等
 
 
 
@@ -780,10 +708,6 @@ var params = {
   IfUnmodifiedSince : 'STRING_VALUE',             /* 非必须 */
   IfMatch : 'STRING_VALUE',                       /* 非必须 */
   IfNoneMatch : 'STRING_VALUE',                   /* 非必须 */
-  Output : 'WRITE_STREAM',                        /* 必须 */
-  onProgress : function(progressData) {           /* 非必须 */
-    console.log(JSON.stringify(progressData));
-  }                        
 };
 
 cos.getObject(params, function(err, data) {
@@ -813,12 +737,6 @@ cos.getObject(params, function(err, data) {
   * IfUnmodifiedSince —— (String) ： 如果文件修改时间早于或等于指定时间，才返回文件内容。否则返回 412 (precondition failed)
   * IfMatch —— (String) ： 当 ETag 与指定的内容一致，才返回文件。否则返回 412 (precondition failed)
   * IfNoneMatch —— (String) ： 当 ETag 与指定的内容不一致，才返回文件。否则返回304 (not modified)
-  * Output —— (WriteStream) ： 需要输出文件的写流
-  * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（progressData）属性如下
-    * progressData.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
-    * progressData.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
-    * progressData.speed —— (Number) ： 文件的下载速度，以字节/秒（bytes/s）为单位
-    * progressData.percent —— (Number) ： 文件下载的百分比，以小数形式呈现，例如：下载 50% 即为 0.5
 
 #### 回调函数说明
 
@@ -835,6 +753,7 @@ function(err, data) { ... }
     * x-cos-meta-* —— (String) ：用户自定义的元数据
   * NotModified —— (Boolean) ：如果请求时带有 IfModifiedSince 则返回该属性，如果文件未被修改，则为 true，否则为 false
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，304，403，404等
+  * Body —— (String)： 返回的文件内容，默认为 text 形式
 
 
 ### Put Object
@@ -869,7 +788,7 @@ var params = {
   GrantFullControl : 'STRING_VALUE',              /* 非必须 */
   StorageClass : 'STRING_VALUE',                  /* 非必须 */
   'x-cos-meta-*' : 'STRING_VALUE',                /* 非必须 */
-  Body: 'Buffer || ReadStream || File || Blob',   /* 必须 */
+  Body: 'String || File || Blob',                 /* 必须 */
   onProgress : function(progressData) {           /* 非必须 */
     console.log(JSON.stringify(progressData));
   }
@@ -902,7 +821,7 @@ cos.putObject(params, function(err, data) {
   * GrantFullControl —— (String)  ： 赋予被授权者读写权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
   * StorageClass —— (String) ： 设置 Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE，默认值：STANDARD
   * x-cos-meta-* —— (String) ： 允许用户自定义的头部信息，将作为 Object 元数据返回。大小限制 2K
-  * Body —— (Buffer || ReadStream || File || Blob)  ： 上传文件的内容或者流
+  * Body —— (String || File || Blob)  ： 上传文件的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
   * onProgress —— (Function) ： 进度的回调函数，进度回调响应对象（progressData）属性如下
     * progressData.loaded —— (Number) ： 已经下载的文件部分大小，以字节（bytes）为单位
     * progressData.total —— (Number) ： 整个文件的大小，以字节（bytes）为单位
@@ -957,7 +876,7 @@ cos.deleteObject(params, function(err, data) {
 #### 操作参数说明
 
 * **params** (Object) ： 参数列表
-  * Bucket —— (String) ： Bucket 名称      
+  * Bucket —— (String) ： Bucket 名称
   * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
   * Key —— (String) ： 文件名称
 
@@ -1415,7 +1334,7 @@ var params = {
   ContentLength : 'STRING_VALUE',                 /* 必须 */
   PartNumber : 'STRING_VALUE',                    /* 必须 */
   UploadId : 'STRING_VALUE',                      /* 必须 */
-  Body : 'Buffer || ReadStream',                  /* 必须 */
+  Body: 'String || File || Blob',                 /* 必须 */
   Expect : 'STRING_VALUE',                        /* 非必须 */
   ContentMD5 : 'STRING_VALUE',                    /* 非必须 */
 };
@@ -1439,9 +1358,10 @@ cos.multipartUpload(params, function(err, data) {
   * ContentLength —— (String) ： RFC 2616 中定义的 HTTP 请求内容长度（字节）
   * PartNumber —— (String) ： 分块的编号
   * UploadId —— (String) ： 上传任务编号
-  * Body —— (Buffer || ReadStream)  ： 上传文件的分块内容或者流
+  * Body —— (String || File || Blob)  ： 上传文件的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
   * Expect —— (String) ： 当使用 Expect: 100-continue 时，在收到服务端确认后，才会发送请求内容
   * ContentMD5 —— (String) ： RFC 1864 中定义的经过Base64编码的128-bit 内容 MD5 校验值。此头部用来校验文件内容是否发生变化
+
 
 #### 回调函数说明
 
@@ -1760,7 +1680,7 @@ var params = {
   Bucket: 'STRING_VALUE',                         /* 必须 */
   Region: 'STRING_VALUE',                         /* 必须 */
   Key: 'STRING_VALUE',                            /* 必须 */
-  FilePath: 'STRING_VALUE',                       /* 必须 */
+  Body: 'String || File || Blob',                 /* 必须 */
   SliceSize: 'STRING_VALUE',                      /* 非必须 */
   StorageClass: 'STRING_VALUE',                   /* 非必须 */
   AsyncLimit: 'NUMBER',                           /* 非必须 */
@@ -1788,10 +1708,10 @@ cos.sliceUploadFile(params, function(err, data) {
 #### 操作参数说明
 
 * **params** (Object) ： 参数列表
-  * Bucket —— (String) ： Bucket 名称          
+  * Bucket —— (String) ： Bucket 名称
   * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
   * Key —— (String) ： Object名称
-  * FilePath —— (String) ： 本地文件路径
+  * Body —— (String || File || Blob)  ： 上传文件的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
   * SliceSize —— (String) ： 分块大小
   * AsyncLimit —— (String) ： 分块的并发量
   * StorageClass —— (String) ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
