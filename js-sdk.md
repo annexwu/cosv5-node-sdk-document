@@ -25,7 +25,14 @@ npm install cos-js-sdk-v5
 
 1. 使用 SDK 需要浏览器支持HTML 5
 2. 去您的控制台获取 AppId, SecretId, SecretKey, 地址在 https://console.qcloud.com/capi
-3. 请您到控制台操作，**针对您要操作的bucket进行跨域（CORS）设置**, 可以按照如下范例，**修改允许的来源 Origin 和 Headers**, 控制台地址在 https://console.qcloud.com/cos
+3. 请您到控制台操作，**针对您要操作的bucket进行跨域（CORS）设置**, 可以按照如下范例，**修改允许的来源 Origin 和 Headers**, 控制台地址在 https://console.qcloud.com/cos，默认可以进行如下配置
+
+* 来源 Origin ： 设置为通配符`*`，或者你的`指定的 Origin`
+* 操作 Methods ： 勾选`所有 HTTP 方法`，或者你`指定的 HTTP 方法`
+* Credentials ： 一般选择`false`即可
+* Allow-Headers ： 需要配置如下头部，包括 `origin`，`accept`，`content-type`，`authorization`，`content-md5`，`x-cos-copy-source`，`x-cos-acl`，`x-cos-grant-read`，`x-cos-grant-write`，`x-cos-grant-full-control`，还可以配置其他允许的头部
+* Expose-Headers ： 默认设置`ETag`即可，也可以暴露你`指定的头部`
+* 超时 Max-Age ： 可以设置为 3600 ，或者你`指定的超时时间`，以`秒`为单位
 
 ![Bucket 跨域设置](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/cors.png)
 
