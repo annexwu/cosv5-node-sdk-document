@@ -7,7 +7,7 @@ COS服务的 **前端 js SDK v5版本**的GitHub下载地址： [https://github.
 
  **前端 js SDK v5版本**接口的使用 demo 在这里： [demo](https://github.com/tencentyun/cos-js-sdk-v5/blob/master/demo/demo.js)
 
-### npm 引入
+### 前端 js 引入
 
 ```shell
 <script src="../dist/cos-js-sdk-v5.js"></script>
