@@ -15,7 +15,7 @@ COS服务的 **前端 js SDK v5版本**的GitHub下载地址： [https://github.
 <script src="../dist/cos-js-sdk-v5.js"></script>
 ```
 
-* **使用 npm 和 webpack 引入**
+* **使用 webpack 引入**
 
 ```shell
 npm install cos-js-sdk-v5
