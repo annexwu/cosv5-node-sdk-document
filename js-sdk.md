@@ -88,7 +88,7 @@ var cos = new COS(params);
 #### 功能说明
 
 Get Authorization 用于计算鉴权信息（Authorization）， 用以验证请求合法性的签名信息。
-** 该方法推荐在前端调试时使用，项目上线不推荐使用前端计算签名的方法，有暴露秘钥的风险**
+**该方法推荐在前端调试时使用，项目上线不推荐使用前端计算签名的方法，有暴露秘钥的风险**
 
 #### 操作方法原型
 
@@ -98,9 +98,9 @@ Get Authorization 用于计算鉴权信息（Authorization）， 用以验证请
 
 var params = {
   method: 'STRING_VALUE',                          /* 必须 */
-  pathname: 'STRING_VALUE',                             /* 非必须 */
-  SecretId: 'STRING_VALUE',                        /* 非必须 */
-  SecretKey: 'STRING_VALUE',                       /* 非必须 */
+  pathname: 'STRING_VALUE',                        /* 非必须 */
+  SecretId: 'STRING_VALUE',                        /* 必须 */
+  SecretKey: 'STRING_VALUE',                       /* 必须 */
 };
 
 var Authorization = COS.getAuthorization(params);
@@ -112,13 +112,57 @@ var Authorization = COS.getAuthorization(params);
 * **params** (Object) ： 参数列表
   * method —— (String) ： 操作方法，如 get, post, delete, head 等 HTTP 方法
   * pathname —— (String) ： 操作的 object 名称，**如果请求操作是对文件的，则为文件名，且为必须参数**。如果操作是对于 Bucket，则为空
-  * SecretId —— (String) ： 用户的 SecretId，如果 SecretId 和 COS 实例创建时相同，则可以不填
-  * SecretKey —— (String) ： 用户的 SecretKey，如果 SecretKey 和 COS 实例创建时相同，则可以不填
+  * SecretId —— (String) ： 用户的 SecretId
+  * SecretKey —— (String) ： 用户的 SecretKey
 
 #### 返回值说明
 
   * Authorization —— (String) ： 操作的鉴权签名
 
+
+## Service操作
+
+### Get Service
+
+#### 功能说明
+
+Get Service 接口是用来获取请求者名下的所有存储空间列表（Bucket list）。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能获取 Bucket 列表，且只能获取签名中 AccessID 所属账户的 Bucket 列表。
+
+#### 操作方法原型
+
+* 调用 Get Service 操作
+
+```js
+
+cos.getService(function(err, data) {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
+
+```
+
+#### 操作参数说明
+
+* **无特殊参数** 
+
+#### 回调函数说明
+
+```js
+function(err, data) { ... }
+```
+#### 回调参数说明
+
+* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。 
+* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
+  * Buckets —— (Array) ：说明本次返回的Bucket列表的所有信息
+    * Name —— (String) ：Bucket 的名称
+    * CreateDate —— (String) ：Bucket 创建时间。ISO8601 格式，例如 2016-11-09T08:46:32.000Z
+    * Location —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
+  * headers —— (Object)：    请求返回的头部信息
+  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
 
 
 ## Bucket操作
@@ -242,6 +286,63 @@ function(err, data) { ... }
     * StorageClass —— (String)  ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
+
+
+
+###  Put Bucket
+
+#### 功能说明
+
+Put Bucket 接口请求可以在指定账号下创建一个 Bucket。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能创建新的 Bucket 。创建 Bucket 的用户默认成为 Bucket 的持有者。
+
+#### 操作方法原型
+
+* 调用 Put Bucket 操作
+
+```js
+
+var params = {
+  Bucket : 'STRING_VALUE',            /* 必须 */
+  Region : 'STRING_VALUE',            /* 必须 */
+  ACL : 'STRING_VALUE',               /* 非必须 */
+  GrantRead : 'STRING_VALUE',         /* 非必须 */
+  GrantWrite : 'STRING_VALUE',        /* 非必须 */
+  GrantFullControl : 'STRING_VALUE'   /* 非必须 */
+};
+
+cos.putBucket(params, function(err, data) {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log(data);
+  }
+});
+
+```
+
+#### 操作参数说明
+
+* **params** (Object) ： 参数列表
+  * Bucket —— (String) ： Bucket 名称      
+  * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
+  * ACL —— (String)  ： 定义 Object 的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
+  * GrantRead —— (String)  ： 赋予被授权者读的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
+  * GrantWrite —— (String)  ： 赋予被授权者写的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
+  * GrantFullControl —— (String)  ： 赋予被授权者读写权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
+
+#### 回调函数说明
+
+```js
+function(err, data) { ... }
+```
+#### 回调参数说明
+
+* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
+* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
+  * Location —— (String)  ：  创建成功后，Bucket 的操作地址
+  * headers —— (Object)：    请求返回的头部信息
+  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404 等
+
 
 
 
@@ -532,6 +633,8 @@ function(err, data) { ... }
 
 ###  Delete Bucket CORS
 
+##### 注意，删除当前 Bucket 的跨域访问配置信息，会导致所有请求跨域失败，请谨慎操作
+
 #### 功能说明
 
 Delete Bucket CORS 接口请求实现删除跨域访问配置信息。
@@ -753,7 +856,7 @@ function(err, data) { ... }
     * x-cos-meta-* —— (String) ：用户自定义的元数据
   * NotModified —— (Boolean) ：如果请求时带有 IfModifiedSince 则返回该属性，如果文件未被修改，则为 true，否则为 false
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，304，403，404等
-  * Body —— (String)： 返回的文件内容，默认为 text 形式
+  * Body —— (String)： 返回的文件内容，默认为 String 形式
 
 
 ### Put Object
@@ -1680,7 +1783,7 @@ var params = {
   Bucket: 'STRING_VALUE',                         /* 必须 */
   Region: 'STRING_VALUE',                         /* 必须 */
   Key: 'STRING_VALUE',                            /* 必须 */
-  Body: 'String || File || Blob',                 /* 必须 */
+  Body: 'File || Blob',                           /* 必须 */
   SliceSize: 'STRING_VALUE',                      /* 非必须 */
   StorageClass: 'STRING_VALUE',                   /* 非必须 */
   AsyncLimit: 'NUMBER',                           /* 非必须 */
@@ -1711,7 +1814,7 @@ cos.sliceUploadFile(params, function(err, data) {
   * Bucket —— (String) ： Bucket 名称
   * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
   * Key —— (String) ： Object名称
-  * Body —— (String || File || Blob)  ： 上传文件的内容，可以为`字符串`，`File 对象`或者 `Blob 对象`
+  * Body —— (File || Blob)  ： 上传文件的内容，可以为`File 对象`或者 `Blob 对象`
   * SliceSize —— (String) ： 分块大小
   * AsyncLimit —— (String) ： 分块的并发量
   * StorageClass —— (String) ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
