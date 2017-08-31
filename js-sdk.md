@@ -13,7 +13,7 @@ COS服务的 **前端 js SDK v5版本**的GitHub下载地址： [https://github.
 <script src="../dist/cos-js-sdk-v5.js"></script>
 ```
 
-
+<span id="get_start"></span>
 ### 开发环境
 
 1. 使用 SDK 需要浏览器支持HTML 5
@@ -297,7 +297,7 @@ function(err, data) { ... }
 
 #### 注意，该方法在浏览器端使用会存在跨域问题，比如`OPTIONS`请求会返回`404 Not Found`，因此如果要强制使用该方法，需要强制关闭浏览器的安全策略
 
-#### 不推荐在浏览器端使用该方法，请在控制台进行`Bucket 的创建`和`CORS 跨域设置`的配置
+#### 不推荐在浏览器端使用该方法，请在控制台进行`Bucket 的创建`和`跨域访问配置`
 
 #### 功能说明
 
@@ -565,6 +565,8 @@ function(err, data) { ... }
 
 ### Put Bucket CORS
 
+#### 注意，如果要在前端修改`跨域访问配置`，需要该 Bucket 本身支持跨域，可以在`控制台`进行`跨域访问配置`，详情见[开发环境](#get_start)
+
 #### 功能说明
 
 Put Bucket CORS 接口用来请求设置 Bucket 的跨域资源共享权限，您可以通过传入 XML 格式的配置文件来实现配置，文件大小限制为64 KB。默认情况下，Bucket 的持有者直接有权限使用该 API 接口，Bucket 持有者也可以将权限授予其他用户。
@@ -641,7 +643,7 @@ function(err, data) { ... }
 
 ###  Delete Bucket CORS
 
-##### 注意，删除当前 Bucket 的跨域访问配置信息，会导致所有请求跨域失败，请谨慎操作
+##### 注意，删除当前 Bucket 的`跨域访问配置`信息，会导致所有请求跨域失败，请谨慎操作
 
 #### 功能说明
 
