@@ -13,7 +13,6 @@ COS服务的 **前端 js SDK v5版本**的GitHub下载地址： [https://github.
 <script src="../dist/cos-js-sdk-v5.js"></script>
 ```
 
-<span id="get_start"></span>
 ### 开发环境
 
 1. 使用 SDK 需要浏览器支持HTML 5
@@ -565,7 +564,7 @@ function(err, data) { ... }
 
 ### Put Bucket CORS
 
-#### 注意，如果要在前端修改`跨域访问配置`，需要该 Bucket 本身支持跨域，可以在`控制台`进行`跨域访问配置`，详情见[开发环境](#get_start)
+#### 注意，如果要在前端修改`跨域访问配置`，需要该 Bucket 本身支持跨域，可以在`控制台`进行`跨域访问配置`，详情见[开发环境](#开发环境)
 
 #### 功能说明
 
