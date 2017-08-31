@@ -134,54 +134,6 @@ var Authorization = COS.getAuthorization(params);
   * Authorization —— (String) ： 操作的鉴权签名
 
 
-## Service操作
-
-### Get Service
-
-#### 注意，该方法在浏览器端使用会存在跨域问题，比如`OPTIONS`请求会返回`400 Bad Request`，因此如果要强制使用该方法，需要强制关闭浏览器的安全策略
-
-#### 不推荐在浏览器端使用该方法
-
-#### 功能说明
-
-Get Service 接口是用来获取请求者名下的所有存储空间列表（Bucket list）。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能获取 Bucket 列表，且只能获取签名中 AccessID 所属账户的 Bucket 列表。
-
-#### 操作方法原型
-
-* 调用 Get Service 操作
-
-```js
-
-cos.getService(function(err, data) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
-});
-
-```
-
-#### 操作参数说明
-
-* **无特殊参数** 
-
-#### 回调函数说明
-
-```js
-function(err, data) { ... }
-```
-#### 回调参数说明
-
-* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。 
-* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * Buckets —— (Array) ：说明本次返回的Bucket列表的所有信息
-    * Name —— (String) ：Bucket 的名称
-    * CreateDate —— (String) ：Bucket 创建时间。ISO8601 格式，例如 2016-11-09T08:46:32.000Z
-    * Location —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
-  * headers —— (Object)：    请求返回的头部信息
-  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
-
 
 ## Bucket操作
 
@@ -304,67 +256,6 @@ function(err, data) { ... }
     * StorageClass —— (String)  ： Object 的存储级别，枚举值：STANDARD，STANDARD_IA，NEARLINE
   * headers —— (Object)：    请求返回的头部信息
   * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404等
-
-
-
-###  Put Bucket
-
-#### 注意，该方法在浏览器端使用会存在跨域问题，比如`OPTIONS`请求会返回`404 Not Found`，因此如果要强制使用该方法，需要强制关闭浏览器的安全策略
-
-#### 不推荐在浏览器端使用该方法，请在控制台进行`Bucket 的创建`和`跨域访问配置`
-
-#### 功能说明
-
-Put Bucket 接口请求可以在指定账号下创建一个 Bucket。该 API 接口不支持匿名请求，您需要使用帯 Authorization 签名认证的请求才能创建新的 Bucket 。创建 Bucket 的用户默认成为 Bucket 的持有者。
-
-#### 操作方法原型
-
-* 调用 Put Bucket 操作
-
-```js
-
-var params = {
-  Bucket : 'STRING_VALUE',            /* 必须 */
-  Region : 'STRING_VALUE',            /* 必须 */
-  ACL : 'STRING_VALUE',               /* 非必须 */
-  GrantRead : 'STRING_VALUE',         /* 非必须 */
-  GrantWrite : 'STRING_VALUE',        /* 非必须 */
-  GrantFullControl : 'STRING_VALUE'   /* 非必须 */
-};
-
-cos.putBucket(params, function(err, data) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
-});
-
-```
-
-#### 操作参数说明
-
-* **params** (Object) ： 参数列表
-  * Bucket —— (String) ： Bucket 名称      
-  * Region —— (String) ： Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://www.qcloud.com/document/product/436/6224)
-  * ACL —— (String)  ： 定义 Object 的 ACL 属性。有效值：private，public-read-write，public-read；默认值：private
-  * GrantRead —— (String)  ： 赋予被授权者读的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-  * GrantWrite —— (String)  ： 赋予被授权者写的权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-  * GrantFullControl —— (String)  ： 赋予被授权者读写权限。格式：id=" ",id=" "；当需要给子账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;SubUin>"，当需要给根账户授权时，id="qcs::cam::uin/&lt;OwnerUin>:uin/&lt;OwnerUin>"，例如：'id="qcs::cam::uin/123:uin/123", id="qcs::cam::uin/123:uin/456"'
-
-#### 回调函数说明
-
-```js
-function(err, data) { ... }
-```
-#### 回调参数说明
-
-* **err** —— (Object)   ：   请求发生错误时返回的对象，包括网络错误和业务错误。如果请求成功，则为空。
-* **data** —— (Object)： 请求成功时返回的对象，如果请求发生错误，则为空。
-  * Location —— (String)  ：  创建成功后，Bucket 的操作地址
-  * headers —— (Object)：    请求返回的头部信息
-  * statusCode —— (Number)： 请求返回的 HTTP 状态码，如 200，403，404 等
-
 
 
 
@@ -580,6 +471,8 @@ function(err, data) { ... }
 ### Put Bucket CORS
 
 #### 注意，如果要在前端修改`跨域访问配置`，需要该 Bucket 本身支持跨域，可以在`控制台`进行`跨域访问配置`，详情见[开发环境](#开发环境)
+
+#### 在修改`跨域访问配置`时，请注意不要影响到当前的 Origin 下的跨域请求
 
 #### 功能说明
 
